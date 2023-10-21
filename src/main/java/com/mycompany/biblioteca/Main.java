@@ -5,22 +5,28 @@
 package com.mycompany.biblioteca;
 
 import com.mycompany.biblioteca.records.Libro;
+import com.mycompany.biblioteca.records.LibroCD;
+import com.mycompany.biblioteca.records.LibroDigital;
+import com.mycompany.biblioteca.records.LibroImpreso;
 import com.mycompany.biblioteca.records.Autor;
+import com.mycompany.biblioteca.records.Editorial;
+import com.mycompany.biblioteca.records.Formato;
 
 import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
-        Autor nuevoAutor = new Autor("Juan", "Betancourt");
-        Autor marcoAurelio = new Autor("Marco", "Aurelio");
-        Libro l1 = new Libro("El olvido que seremos", new Date(), nuevoAutor);
-        Libro l2 = new Libro("Meditaciones", new Date(), marcoAurelio);
+        Autor marcoAurelio = new Autor(1, "Marco Aurelio", "Romano");
+        Editorial editroial = new Editorial(1, "Pensamiento", 123);
+        Libro l1 = new LibroImpreso("Meditaciones", new Date(), marcoAurelio, editroial);
+        Libro l2 = new LibroDigital("Cartas a Lucilio", new Date(), marcoAurelio, editroial, "https://db.books/libros/get/nombre=Meditaciones");
+        Libro l3 = new LibroCD("La republica", new Date(), marcoAurelio, editroial, 5, Formato.MP3);
         
-        Biblioteca biblioteca = new Biblioteca("");
-        biblioteca.agregarLibro(l1);
-        biblioteca.agregarLibro(l2);
+        Biblioteca biblioteca = new Biblioteca("UQ", 50);
+        biblioteca.agregarLibroImpreso(l1);
+        biblioteca.agregarLibroDigital(l2);
+        biblioteca.agregarLibroCD(l3);
         
-        System.out.println(biblioteca.getLibroPorNombre("Meditaciones").isPresent());
-        System.out.println(biblioteca.getLibroPorAutor("Marco").isPresent());
+        System.out.println(biblioteca.getCantidadLibrosAutor(marcoAurelio));
     }
 }
